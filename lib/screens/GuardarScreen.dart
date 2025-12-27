@@ -7,45 +7,37 @@ class Guardarscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('GuardarScreen'),),
+      appBar: AppBar(title: const Text('Gastronomía Ecuador')),
       body: formulario(),
     );
   }
 }
 
-Widget formulario(){
+Widget formulario() {
+  TextEditingController _id = TextEditingController();
+  TextEditingController _plato = TextEditingController();
+  TextEditingController _ciudad = TextEditingController();
 
-TextEditingController _nombre= TextEditingController();
-TextEditingController _cedula= TextEditingController();
-TextEditingController _edad= TextEditingController();
-TextEditingController _telefono= TextEditingController();
-
-return Column(
-  children: [
-    TextField(controller: _cedula,),
-    TextField(controller: _nombre,),  
-    TextField(controller: _edad,),
-    TextField(controller: _telefono,
-    decoration: InputDecoration(
-      border: OutlineInputBorder(),
-      label: Text("Telefono")
-    ),
-    ),
-    FilledButton.icon(onPressed: ()=>guardar(_cedula,_nombre,_edad,_telefono), label: Text("Guardar"), icon: Icon(Icons.save_as),)
-  ],
-
-);
+  return Column(
+    children: [
+      TextField(controller: _id, decoration: const InputDecoration(label: Text("ID del Platillo"))),
+      TextField(controller: _plato, decoration: const InputDecoration(label: Text("Plato Típico"))),  
+      TextField(controller: _ciudad, decoration: const InputDecoration(label: Text("Ciudad"))),
+      const SizedBox(height: 20),
+      FilledButton.icon(
+        onPressed: () => guardar(_id, _plato, _ciudad), 
+        label: const Text("Guardar Platillo"), 
+        icon: const Icon(Icons.save),
+      )
+    ],
+  );
 }
 
-Future<void> guardar(cedula, nombre, edad, telefono) async {
-
-  DatabaseReference ref = FirebaseDatabase.instance.ref("estudiantes/${cedula.text}");
+Future<void> guardar(id, plato, ciudad) async {
+  // Guarda en el nodo 'gastronomia' según el ID (Requisito 2.0 pts)
+  DatabaseReference ref = FirebaseDatabase.instance.ref("gastronomia/${id.text}");
   await ref.set({
-  "nombre": nombre.text,
-  "edad": edad.text,
-  "telefono": telefono.text,
-  
-  }
-);
-  
+    "plato": plato.text,
+    "ciudad": ciudad.text,
+  });
 }

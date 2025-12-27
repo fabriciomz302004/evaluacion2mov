@@ -10,7 +10,7 @@ class NavegadorTabs extends StatefulWidget {
 
 class _NavegadorTabsState extends State<NavegadorTabs> {
   int _indice = 0;
-  List<Widget> pantallas = [ Guardarscreen(), LeerScreens()];
+  List<Widget> pantallas = [ const Guardarscreen(), const LeerScreens()];
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class _NavegadorTabsState extends State<NavegadorTabs> {
         onTap: (indice) {
           setState(() { _indice = indice; });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.restaurant), label: "Gastronomía"),
           BottomNavigationBarItem(icon: Icon(Icons.location_city), label: "Ciudades"),
         ],
