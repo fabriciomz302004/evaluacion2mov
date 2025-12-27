@@ -1,6 +1,5 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class LeerScreens extends StatelessWidget {
   const LeerScreens({super.key});
@@ -8,87 +7,52 @@ class LeerScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.blue),
+      appBar: AppBar(title: const Text("Ciudades del Ecuador"), backgroundColor: Colors.blue),
       body: lista(),
     );
   }
 }
 
-//leer lista
-Future<List> leerlista() async {
-  List estudiantesList = [];
-
-  DatabaseReference starCountRef = FirebaseDatabase.instance.ref('estudiantes');
-
-  final snapshot = await starCountRef.get();
-  final data = snapshot.value;
-
-  if (data != null) {
-    Map mapData = data as Map;
-
-    mapData.forEach(
-      (clave, valor) => estudiantesList.add({
-        'cedula': clave,
-        'nombre': valor['nombre'],
-        'edad': valor['edad'],
-        'telefono': valor['telefono'],
-      }),
-    );
-  }
-
-  return estudiantesList;
+Future<List> leerJson(BuildContext context) async {
+  final String respuesta = await DefaultAssetBundle.of(context).loadString('assets/data/ciudades.json');
+  final data = await json.decode(respuesta);
+  return data['ciudades'];
 }
 
 Widget lista() {
-  return FutureBuilder(future: leerlista(), builder: (context, snapshot){
-    if (snapshot.hasData) {
-      List data = snapshot.data!;
-
-      return ListView.builder( itemCount:data.length, itemBuilder:(context, index) {
-        final item = data[index];
-
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            padding: EdgeInsets.zero,
-          
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(50),
-            ),
-          
-          
-          
-          
-          
-            child: ListTile(
-              title: Text("Cedula${item['cedula']}"),
-              subtitle: Text(item['nombre']),
-
-
-              trailing: IconButton(
-                onPressed: ()=>eliminar(item['cedula'],context),
-                 icon: Icon(Icons.delete)),
-              leading: IconButton(onPressed: (){}, icon: Icon(Icons.gamepad_rounded)),
-            
-            ),
-          ),
-        );
-
-      },);
-
-    }else{
-      return CircularProgressIndicator();
-    }
-  },);
-}
-
-Future<void> eliminar(cedula,context) async {
-  DatabaseReference ref = FirebaseDatabase.instance.ref("estudiantes/$cedula");
-
-await ref.remove ();
-//mejorar
-Navigator.push(context, MaterialPageRoute
-(builder: (context) => LeerScreens()));
-
+  return FutureBuilder(
+    future: null, // Solo para estructura, el Builder interno maneja la carga
+    builder: (context, snapshot) {
+      return FutureBuilder(
+        future: leerJson(context),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List data = snapshot.data!;
+            return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                final item = data[index];
+                return ListTile(
+                  leading: Image.network(item['informacion']['imagen'], width: 50),
+                  title: Text(item['nombre']),
+                  subtitle: Text(item['provincia']),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text(item['nombre']),
+                        content: Text(item['descripcion']),
+                        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text("OK"))],
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+    },
+  );
 }
