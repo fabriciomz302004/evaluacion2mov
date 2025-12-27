@@ -34,7 +34,6 @@ Widget formulario() {
 }
 
 Future<void> guardar(id, plato, ciudad) async {
-  // Guarda en el nodo 'gastronomia' según el ID (Requisito 2.0 pts)
   DatabaseReference ref = FirebaseDatabase.instance.ref("gastronomia/${id.text}");
   await ref.set({
     "plato": plato.text,

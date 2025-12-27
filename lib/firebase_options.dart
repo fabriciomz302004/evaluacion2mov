@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '474547297960',
     projectId: 'app1-acca3',
     authDomain: 'app1-acca3.firebaseapp.com',
+    databaseURL: 'https://app1-acca3-default-rtdb.firebaseio.com',
     storageBucket: 'app1-acca3.firebasestorage.app',
   );
 
@@ -54,6 +55,7 @@ class DefaultFirebaseOptions {
     appId: '1:474547297960:android:62eea610f441a7fd092c9d',
     messagingSenderId: '474547297960',
     projectId: 'app1-acca3',
+    databaseURL: 'https://app1-acca3-default-rtdb.firebaseio.com',
     storageBucket: 'app1-acca3.firebasestorage.app',
   );
 
@@ -62,6 +64,7 @@ class DefaultFirebaseOptions {
     appId: '1:474547297960:ios:537f0b91924a645d092c9d',
     messagingSenderId: '474547297960',
     projectId: 'app1-acca3',
+    databaseURL: 'https://app1-acca3-default-rtdb.firebaseio.com',
     storageBucket: 'app1-acca3.firebasestorage.app',
     iosBundleId: 'com.example.appNueva',
   );
@@ -71,6 +74,7 @@ class DefaultFirebaseOptions {
     appId: '1:474547297960:ios:537f0b91924a645d092c9d',
     messagingSenderId: '474547297960',
     projectId: 'app1-acca3',
+    databaseURL: 'https://app1-acca3-default-rtdb.firebaseio.com',
     storageBucket: 'app1-acca3.firebasestorage.app',
     iosBundleId: 'com.example.appNueva',
   );
@@ -81,6 +85,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '474547297960',
     projectId: 'app1-acca3',
     authDomain: 'app1-acca3.firebaseapp.com',
+    databaseURL: 'https://app1-acca3-default-rtdb.firebaseio.com',
     storageBucket: 'app1-acca3.firebasestorage.app',
   );
 
